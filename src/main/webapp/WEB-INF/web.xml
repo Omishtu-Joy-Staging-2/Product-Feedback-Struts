@@ -1,0 +1,20 @@
+
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         version="3.1"
+         metadata-complete="false">
+  <display-name>ProductFeedbackCollector</display-name>
+
+  <filter>
+    <filter-name>struts2</filter-name>
+    <filter-class>org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>struts2</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <welcome-file-list>
+    <welcome-file>Landing.action</welcome-file>
+  </welcome-file-list>
+</web-app>

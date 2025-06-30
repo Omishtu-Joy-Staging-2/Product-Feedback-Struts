@@ -1,0 +1,626 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%
+  String user = (String) session.getAttribute("user");
+  if (user == null) {
+    response.sendRedirect("login.jsp");
+    return;
+  }
+%>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>Product Feedback Collector</title>
+
+    <!-- Custom fonts for this template-->
+    <link
+      href="vendor/fontawesome-free/css/all.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet"
+    />
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet" />
+    <style>
+      .rating-input {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: flex-end;
+      }
+
+      .rating-input input {
+        display: none;
+      }
+
+      .rating-input label {
+        color: #ddd;
+        font-size: 1.5rem;
+        padding: 0 0.2rem;
+        cursor: pointer;
+        transition: color 0.2s;
+      }
+
+      .rating-input input:checked ~ label,
+      .rating-input input:hover ~ label {
+        color: #ffc107;
+      }
+
+      .rating-input label:hover,
+      .rating-input label:hover ~ label {
+        color: #ffc107;
+      }
+
+      .rating-input input:checked + label {
+        color: #ffc107;
+      }
+    </style>
+  </head>
+
+  <body id="page-top">
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+      <!-- Content Wrapper -->
+      <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+          <!-- Topbar -->
+          <nav
+            class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"
+          >
+            <!-- Sidebar Toggle (Topbar) -->
+            <button
+              id="sidebarToggleTop"
+              class="btn btn-link d-md-none rounded-circle mr-3"
+            >
+              <i class="fa fa-bars"></i>
+            </button>
+
+            <!-- Topbar Search -->
+            <form
+              class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
+            >
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control bg-light border-0 small"
+                  placeholder="Search for..."
+                  aria-label="Search"
+                  aria-describedby="basic-addon2"
+                />
+                <div class="input-group-append">
+                  <button class="btn btn-primary" type="button">
+                    <i class="fas fa-search fa-sm"></i>
+                  </button>
+                </div>
+              </div>
+            </form>
+
+            <!-- Topbar Navbar -->
+            <ul class="navbar-nav ml-auto">
+              <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+              <li class="nav-item dropdown no-arrow d-sm-none">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="searchDropdown"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <i class="fas fa-search fa-fw"></i>
+                </a>
+                <!-- Dropdown - Messages -->
+                <div
+                  class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                  aria-labelledby="searchDropdown"
+                >
+                  <form class="form-inline mr-auto w-100 navbar-search">
+                    <div class="input-group">
+                      <input
+                        type="text"
+                        class="form-control bg-light border-0 small"
+                        placeholder="Search for..."
+                        aria-label="Search"
+                        aria-describedby="basic-addon2"
+                      />
+                      <div class="input-group-append">
+                        <button class="btn btn-primary" type="button">
+                          <i class="fas fa-search fa-sm"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </li>
+
+              <!-- Nav Item - Alerts -->
+              <li class="nav-item dropdown no-arrow mx-1">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="alertsDropdown"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <i class="fas fa-bell fa-fw"></i>
+                  <!-- Counter - Alerts -->
+                  <span class="badge badge-danger badge-counter">0</span>
+                </a>
+                <!-- Dropdown - Alerts -->
+                <div
+                  class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                  aria-labelledby="alertsDropdown"
+                >
+                  <h6 class="dropdown-header">Notification</h6>
+                  <a class="dropdown-item d-flex align-items-center" href="#">
+                    <div>
+                      <div class="small text-gray-500">No New Message</div>
+                    </div>
+                  </a>
+                  <a
+                    class="dropdown-item text-center small text-gray-500"
+                    href="#"
+                    >Show All Messages</a
+                  >
+                </div>
+              </li>
+
+              <div class="topbar-divider d-none d-sm-block"></div>
+
+              <!-- Nav Item - User Information -->
+              <li class="nav-item dropdown no-arrow">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="userDropdown"
+                  role="button"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <span class="mr-2 d-none d-lg-inline text-gray-600 small"
+                    >User</span
+                  >
+                  <img
+                    class="img-profile rounded-circle"
+                    src="img/undraw_profile.svg"
+                  />
+                </a>
+                <!-- Dropdown - User Information -->
+                <div
+                  class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                  aria-labelledby="userDropdown"
+                >
+                  <div class="dropdown-divider"></div>
+                  <a
+                    class="dropdown-item"
+                    href="login.html"
+                    data-toggle="modal"
+                    data-target="#logoutModal"
+                  >
+                    <i
+                      class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"
+                    ></i>
+                    Logout
+                  </a>
+                </div>
+              </li>
+            </ul>
+          </nav>
+          <!-- End of Topbar -->
+
+          <!-- Begin Page Content -->
+<div class="container-fluid">
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Product Feedback</h1>
+  </div>
+
+  <!-- Product Cards Section -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Available Products for Feedback</h6>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <s:iterator value="products" var="p">
+
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card product-card h-100">
+              <!-- Product Image -->
+              <!-- Add loading="lazy" and explicit dimensions -->
+	<img src="<s:property value='#p.thumbnail'/>"
+     class="img-fluid mb-3 card-thumbnail"
+     alt="Product Image"
+     style="height: 220px; width: 100%; object-fit: contain; border-radius: 6px;">
+
+              <!-- Card Body -->
+              <div class="card-body">
+                <h5 class="card-title"><s:property value="name"/></h5>
+                <div class="product-meta mb-3">
+                  <span class="badge badge-info"><s:property value="category"/></span>
+                  <span class="text-muted small ml-2">
+                    <!-- <i class="fas fa-calendar-alt"></i> Released: <s:property value="releaseDate"/> -->
+                  </span>
+                </div>
+                
+                <!-- Rating -->
+                <div class="rating-stars mb-2">
+                  <%
+                    Double rating = (Double) pageContext.findAttribute("averageRating");
+                    if (rating != null) {
+                      int fullStars = (int) Math.floor(rating);
+                      boolean halfStar = (rating - fullStars) >= 0.5;
+                      for (int i = 0; i < fullStars; i++) {
+                  %>
+                        <i class="fas fa-star text-warning"></i>
+                  <%
+                      }
+                      if (halfStar) {
+                  %>
+                        <i class="fas fa-star-half-alt text-warning"></i>
+                  <%
+                      }
+                      for (int i = fullStars + (halfStar ? 1 : 0); i < 5; i++) {
+                  %>
+                        <i class="far fa-star text-warning"></i>
+                  <%
+                      }
+                  %>
+                    <span class="ml-2"><%= String.format("%.1f", rating) %></span>
+                    <span class="text-muted small ml-2">(<s:property value="feedbackCount"/> reviews)</span>
+                  <%
+                    } else {
+                  %>
+                    <span class="text-muted">No ratings yet</span>
+                  <%
+                    }
+                  %>
+                </div>
+                
+                <!-- Description (truncated) -->
+                <p class="card-text text-muted product-description">
+                  <s:property value="description"/>
+                </p>
+              </div>
+              
+              <!-- Card Footer -->
+             <!-- Card Footer -->
+			<div class="card-footer bg-transparent">
+			  <div class="row">
+			    <div class="col-6 pr-1">
+			    <button class="btn btn-info view-details-btn"
+				  data-id="<s:property value='#p.id'/>"
+				  data-name="<s:property value='#p.name'/>"
+				  data-category="<s:property value='#p.category'/>"
+				  data-sku="<s:property value='#p.sku'/>"
+				  data-description="<s:property value='#p.description'/>"
+				  data-thumbnail="<s:property value='#p.thumbnail'/>"
+				  data-specs="<s:property value='#p.specifications'/>"
+				  data-rating="<s:property value='#p.averageRating'/>"
+				  data-feedback-count="<s:property value='#p.feedbackCount'/>"
+				  data-gallery="<s:property value='#p.galleryImages'/>">
+				  <i class="fas fa-eye mr-1"></i> Details
+				</button>
+
+			    </div>
+			    <div class="col-6 pl-1">
+			      <button class="btn btn-primary btn-block open-feedback-modal"
+			              data-product-id="<s:property value='id'/>"
+			              data-product-name="<s:property value='name'/>">
+			        <i class="fas fa-comment-alt mr-1"></i> Feedback
+			      </button>
+			    </div>
+			  </div>
+			</div>
+            </div>
+          </div>
+        </s:iterator>
+      </div>
+    </div>
+  </div>
+</div>
+        <!-- End of Main Content -->
+
+        <!-- Footer -->
+        <footer class="sticky-footer bg-white">
+          <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+              <span>Copyright &copy; Product Feedback collector 2025</span>
+            </div>
+          </div>
+        </footer>
+        <!-- End of Footer -->
+      </div>
+      <!-- End of Content Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div
+      class="modal fade"
+      id="logoutModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <button
+              class="close"
+              type="button"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Select "Logout" below if you are ready to end your current session.
+          </div>
+          <div class="modal-footer">
+            <button
+              class="btn btn-secondary"
+              type="button"
+              data-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <a class="btn btn-primary" href="logout.action">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Feedback Modal -->
+<div class="modal fade" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="feedbackModalLabel">Submit Feedback</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="feedbackForm">
+          <input type="hidden" id="feedbackProductId" name="productId">
+          <div class="form-group">
+            <label for="feedbackProductName">Product</label>
+            <input type="text" class="form-control" id="feedbackProductName" readonly>
+          </div>
+          
+          <div class="form-group">
+            <label>Rating <span class="text-danger">*</span></label>
+            <div class="rating-input">
+              <input type="radio" id="star5" name="rating" value="5">
+              <label for="star5" class="star-label"><i class="fas fa-star"></i></label>
+              
+              <input type="radio" id="star4" name="rating" value="4">
+              <label for="star4" class="star-label"><i class="fas fa-star"></i></label>
+              
+              <input type="radio" id="star3" name="rating" value="3">
+              <label for="star3" class="star-label"><i class="fas fa-star"></i></label>
+              
+              <input type="radio" id="star2" name="rating" value="2">
+              <label for="star2" class="star-label"><i class="fas fa-star"></i></label>
+              
+              <input type="radio" id="star1" name="rating" value="1">
+              <label for="star1" class="star-label"><i class="fas fa-star"></i></label>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="feedbackComments">Comments <span class="text-danger">*</span></label>
+            <textarea class="form-control" id="feedbackComments" name="comments" rows="4" required></textarea>
+            <small class="form-text text-muted">Please be specific about your experience with this product</small>
+          </div>
+          
+          <div class="form-group">
+            <label for="feedbackEmail">Your Email (optional)</label>
+            <input type="email" class="form-control" id="feedbackEmail" name="email">
+            <small class="form-text text-muted">If you'd like us to follow up with you</small>
+          </div>
+          
+          <div class="form-group form-check">
+            <input type="checkbox" class="form-check-input" id="allowContact" name="allowContact">
+            <label class="form-check-label" for="allowContact">Allow us to contact you about this feedback</label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="submit" form="feedbackForm" class="btn btn-primary">Submit Feedback</button>
+      </div>
+    </div>
+  </div>
+</div>
+    <!-- Product Details Modal -->
+<div class="modal fade" id="productDetailsModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-info text-white">
+        <h5 class="modal-title">Product Details</h5>
+        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="product-gallery mb-4">
+              <img id="detail-main-image" src="" class="img-fluid mb-3" alt="Product Image" style="max-height: 300px;">
+              <div class="thumbnail-container mt-3">
+                <div class="row">
+                  <!-- Thumbnails will be added dynamically -->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <h3 id="detailProductName" class="mb-3"></h3>
+            <div class="d-flex align-items-center mb-3">
+              <div class="rating-stars" id="detailRatingStars"></div>
+              <span class="text-muted ml-2" id="detailReviewCount"></span>
+            </div>
+            
+            <div class="product-meta mb-4">
+              <span class="badge badge-info" id="detailCategory"></span>
+              <span class="text-muted ml-2" id="detailReleaseDate"></span>
+            </div>
+            
+            <h5>Description</h5>
+            <p id="detailDescription" class="mb-4"></p>
+            
+            <div class="specifications">
+              <h5>Specifications</h5>
+              <ul class="list-group list-group-flush" id="specsList">
+                <!-- Specs will be added dynamically -->
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+
+<script>
+  $(document).ready(function () {
+    $('#feedbackForm').on('submit', function (e) {
+      e.preventDefault();
+
+      const formData = new FormData(this);
+
+      // Ensure rating is included
+      const rating = $('input[name="rating"]:checked').val();
+      if (!rating) {
+        alert("Please select a rating.");
+        return;
+      }
+      formData.set('rating', rating); // overwrite if needed
+
+      $.ajax({
+    	  url: 'submitFeedback',
+    	  type: 'POST',
+    	  data: formData,
+    	  processData: false,
+    	  contentType: false,
+    	  dataType: 'json', 
+    	  success: function (data) {
+    	    if (data.status === "success") {
+    	      alert("Thank you! Your feedback was submitted.");
+    	      $('#feedbackModal').modal('hide');
+    	      $('#feedbackForm')[0].reset();
+    	    } else {
+    	      alert("Failed to submit feedback. Try again.");
+    	    }
+    	  },
+    	  error: function () {
+    	    alert("Error sending feedback.");
+    	  }
+    	});
+    });
+
+    // Open modal and fill values
+    $('.open-feedback-modal').on('click', function () {
+      const productId = $(this).data('product-id');
+      const productName = $(this).data('product-name');
+
+      $('#feedbackProductId').val(productId);
+      $('#feedbackProductName').val(productName);
+      $('#feedbackModal').modal('show');
+    });
+  });
+</script>
+
+<script>
+$(document).on('click', '.view-details-btn', function () {
+	  const $btn = $(this);
+
+	  const name = $btn.data('name');
+	  const category = $btn.data('category');
+	  const sku = $btn.data('sku');
+	  const description = $btn.data('description');
+	  const thumbnail = $btn.data('thumbnail') || 'uploads/placeholder.jpg';
+	  const specs = $btn.data('specs');
+	  const rating = $btn.data('rating') || 0;
+	  const feedbackCount = $btn.data('feedback-count') || 0;
+	  const galleryRaw = $btn.data('gallery');
+	  const gallery = Array.isArray(galleryRaw) ? galleryRaw : (galleryRaw || "").split(',');
+
+	  $('#detailProductName').text(name);
+	  $('#detailCategory').text(category);
+	  $('#detailReleaseDate').text('SKU: ' + sku);
+	  $('#detailDescription').text(description);
+	  $('#detail-main-image').attr('src', thumbnail);
+
+	  // Set rating
+	  const stars = [];
+	  for (let i = 1; i <= 5; i++) {
+	    stars.push(i <= rating
+	      ? '<i class="fas fa-star text-warning"></i>'
+	      : '<i class="far fa-star text-warning"></i>');
+	  }
+	  $('#detailRatingStars').html(stars.join(''));
+	  $('#detailReviewCount').text(`${feedbackCount} Reviews`);
+
+	  // Specs
+	  $('#specsList').html(specs);
+	  
+
+	  // Gallery
+	  const thumbnails = gallery.map(path => `
+	    <div class="col-3">
+	      <img src="${path}" class="img-thumbnail thumbnail-img" style="cursor:pointer;">
+	    </div>
+	  `).join('');
+	  $('.thumbnail-container .row').html(thumbnails);
+
+	  $('#productDetailsModal').modal('show');
+	});
+
+</script>
+
+
+  </body>
+</html>

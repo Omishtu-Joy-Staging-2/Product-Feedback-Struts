@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+    "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+  <package name="default" extends="struts-default">
+  <action name="Landing" class="com.feedback.actions.ProductListAction">
+    <result name="success">Landing.jsp</result>
+</action>
+    <action name="login" class="com.feedback.actions.LoginAction">
+    <result name="admin">dashboard.jsp</result>
+    <result name="user" type="redirectAction">
+        <param name="actionName">Productslist</param> <!-- Redirect to productlist -->
+    </result>
+    <result name="error">login.jsp</result>
+</action>
+	<action name="register" class="com.feedback.actions.RegisterAction">
+	    <result name="success">login.jsp</result> <!-- redirect to login after successful registration -->
+	    <result name="input">register.jsp</result> <!-- if validation fails -->
+	</action>
+	<action name="logout" class="com.feedback.actions.LogoutAction">
+	    <result name="success">login.jsp</result>
+	</action>
+
+	<action name="listProducts" class="com.feedback.actions.ListProductsAction">
+	  <result name="success">products.jsp</result>
+	</action>
+	<action name="addProduct" class="com.feedback.actions.AddProductAction">
+	<interceptor-ref name="fileUpload">
+        <param name="maximumSize">5242880</param> 
+        <param name="allowedTypes">image/jpeg,image/png,image/jpg,image/gif</param>
+    </interceptor-ref>
+    <interceptor-ref name="defaultStack"/>
+	
+	  <result name="success" type="redirect">listProducts</result>
+	  <result name="error">listProducts</result>
+	</action>
+		
+	 <action name="getProductDetail" class="com.feedback.actions.GetProductDetailAction">
+      <result name="success">/product.jsp</result> <!-- Optional or can be removed -->
+    </action>
+    <action name="updateProduct" class="com.feedback.actions.UpdateProductAction">
+	    <result name="success" type="redirect">listProducts</result>
+	    <result name="error">error.jsp</result>
+	</action>
+	<action name="deleteProduct" class="com.feedback.actions.DeleteProductAction">
+	    <result name="success" type="redirect">listProducts</result>
+	    <result name="error">error.jsp</result>
+	</action>
+	<action name="getFeedbackDetails" class="com.feedback.actions.GetFeedbackDetailAction" />
+	
+		<action name="Productslist" class="com.feedback.actions.ProductListAction">
+		    <result name="success">productlist.jsp</result>
+		</action>
+	  <action name="submitFeedback" class="com.feedback.actions.SubmitFeedbackAction">
+	    <result name="none" type="plainText" />
+	</action>
+	<action name="viewAllFeedback" class="com.feedback.actions.ViewAllFeedbackAction">
+	    <result name="success">feedbacks.jsp</result>
+	</action>
+	
+	
+	<action name="submitFeedbackResponse" class="com.feedback.actions.SubmitFeedbackResponseAction" />
+	
+	  
+
+	
+  </package>
+	
+
+</struts>
