@@ -50,7 +50,7 @@
         id="accordionSidebar"
       >
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand" href="home.html">
+        <a class="sidebar-brand" href="dashboard.jsp">
           <div class="sidebar-brand-text mx-2 w-100">
             <span>Product Feedback Collector</span>
           </div>
@@ -286,7 +286,7 @@
             >
               <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
               <a
-                href="#"
+                href="exportReport.action"
                 class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
                 ><i class="fas fa-download fa-sm text-white-50"></i> Export
                 Report</a
@@ -307,7 +307,7 @@
                           Total Feedback Received
                         </div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
-                          259
+                          <%= session.getAttribute("feedbackCount") %>
                         </div>
                       </div>
                       <div class="col-auto">
@@ -329,14 +329,14 @@
                         <div
                           class="text-xs font-weight-bold text-success text-uppercase mb-1"
                         >
-                          Bug Reports
+                         Total Users
                         </div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
-                          87
+                          <%= session.getAttribute("userCount") %>
                         </div>
                       </div>
                       <div class="col-auto">
-                        <i class="fas fa-bug fa-2x text-gray-300"></i>
+                        <i class="fas fa-users fa-2x text-gray-300"></i>
                       </div>
                     </div>
                   </div>
@@ -352,14 +352,18 @@
                         <div
                           class="text-xs font-weight-bold text-info text-uppercase mb-1"
                         >
-                          Average Rating
+                          Total Average Rating
                         </div>
                         <div class="row no-gutters align-items-center">
                           <div class="col-auto">
+                            <% Double avgRating =(Double) session.getAttribute("avgRating"); 
+                              	 int percentRating= (int) ((avgRating/5.0)*100);
+                               %>
                             <div
                               class="h5 mb-0 mr-3 font-weight-bold text-gray-800"
                             >
-                              4.0/5.0
+                            <%=String.format("%.1f/5.0", avgRating)  %>
+                              
                             </div>
                           </div>
                           <div class="col">
@@ -393,10 +397,10 @@
                         <div
                           class="text-xs font-weight-bold text-warning text-uppercase mb-1"
                         >
-                          Top Products
+                          Total Products
                         </div>
                         <div class="h5 mb-0 font-weight-bold text-gray-800">
-                          18
+                          <%=session.getAttribute("productCount") %>
                         </div>
                       </div>
                       <div class="col-auto">
@@ -489,17 +493,7 @@
                     <div class="chart-pie pt-4 pb-2">
                       <canvas id="myPieChart"></canvas>
                     </div>
-                    <div class="mt-4 text-center small">
-                      <span class="mr-2">
-                        <i class="fas fa-circle text-primary"></i> Direct
-                      </span>
-                      <span class="mr-2">
-                        <i class="fas fa-circle text-success"></i> Social
-                      </span>
-                      <span class="mr-2">
-                        <i class="fas fa-circle text-info"></i> Referral
-                      </span>
-                    </div>
+                    	
                   </div>
                 </div>
               </div>
@@ -581,8 +575,19 @@
     <!-- Page level plugins -->
     <script src="vendor/chart.js/Chart.min.js"></script>
 
-    <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
+
+    
+<!-- Inject dynamic chart data from session -->
+<script id="chartLabelsData" type="application/json">
+  <%= session.getAttribute("chartLabels") %>
+</script>
+<script id="chartValuesData" type="application/json">
+  <%= session.getAttribute("chartValues") %>
+</script>
+<script src="js/demo/chart-area-demo.js?v=<%= System.currentTimeMillis() %>"></script>
+<script type="application/json" id="pieLabels"><%= session.getAttribute("pieLabels") %></script>
+<script type="application/json" id="pieValues"><%= session.getAttribute("pieValues") %></script>
+
+ <script src="js/demo/chart-pie-demo.js?v=<%= System.currentTimeMillis() %>"></script>
   </body>
 </html>

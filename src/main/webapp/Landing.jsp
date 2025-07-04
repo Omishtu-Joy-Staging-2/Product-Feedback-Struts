@@ -94,7 +94,7 @@
 
   <!-- Right Section -->
   <ul class="navbar-nav ml-auto align-items-center">
-    <!-- Alerts -->
+    <!-- Alerts 
     <li class="nav-item dropdown no-arrow mx-1">
       <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown">
         <i class="fas fa-bell fa-fw"></i>
@@ -105,7 +105,7 @@
         <span class="dropdown-item text-muted">No new messages</span>
       </div>
     </li>
-
+-->
     <div class="topbar-divider d-none d-sm-block"></div>
 
     <!-- Login Button -->
@@ -278,7 +278,7 @@
             <h3 id="detailProductName" class="mb-3"></h3>
             <div class="d-flex align-items-center mb-3">
               <div class="rating-stars" id="detailRatingStars"></div>
-              <span class="text-muted ml-2" id="detailReviewCount"></span>
+              
             </div>
             
             <div class="product-meta mb-4">

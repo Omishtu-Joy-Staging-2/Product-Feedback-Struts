@@ -50,7 +50,7 @@
         id="accordionSidebar"
       >
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand" href="home.html">
+        <a class="sidebar-brand" href="dashboard.jsp">
           <div class="sidebar-brand-text mx-2 w-100">
             <span>Product Feedback Collector</span>
           </div>
@@ -283,6 +283,7 @@
   <h1 class="h3 mb-2 text-gray-800">Feedback Management</h1>
 
   <div class="row">
+  <!-- 
     <div class="col-xl-3 col-md-6 mb-4">
       <div class="card border-left-primary shadow h-100 py-2">
         <div class="card-body">
@@ -353,7 +354,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div>-->
   </div>
 <div class="container-fluid">
   <div class="card shadow mb-4">

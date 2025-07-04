@@ -12,6 +12,7 @@ com\feedback\dao\FeedbackListDAO.class
 com\feedback\actions\DeleteProductAction.class
 com\feedback\actions\LogoutAction.class
 com\feedback\model\Feedback.class
+com\feedback\actions\ExportReportAction.class
 com\feedback\actions\UpdateProductAction.class
 com\feedback\actions\SubmitFeedbackResponseAction.class
 com\feedback\model\ProductList.class

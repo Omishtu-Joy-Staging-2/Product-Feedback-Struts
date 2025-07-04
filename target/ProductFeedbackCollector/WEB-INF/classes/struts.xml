@@ -5,13 +5,13 @@
 
 <struts>
   <package name="default" extends="struts-default">
-  <action name="Landing" class="com.feedback.actions.ProductListAction">
+  <action name="" class="com.feedback.actions.ProductListAction">
     <result name="success">Landing.jsp</result>
 </action>
     <action name="login" class="com.feedback.actions.LoginAction">
     <result name="admin">dashboard.jsp</result>
     <result name="user" type="redirectAction">
-        <param name="actionName">Productslist</param> <!-- Redirect to productlist -->
+        <param name="actionName">Productslist</param> 
     </result>
     <result name="error">login.jsp</result>
 </action>
@@ -59,9 +59,9 @@
 	<action name="viewAllFeedback" class="com.feedback.actions.ViewAllFeedbackAction">
 	    <result name="success">feedbacks.jsp</result>
 	</action>
-	
-	
+		
 	<action name="submitFeedbackResponse" class="com.feedback.actions.SubmitFeedbackResponseAction" />
+	<action name="exportReport" class="com.feedback.actions.ExportReportAction"/>
 	
 	  
 

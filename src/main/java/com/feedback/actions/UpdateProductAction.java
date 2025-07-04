@@ -1,4 +1,7 @@
 package com.feedback.actions;
+import java.io.File;
+import org.apache.commons.io.FileUtils;
+import org.apache.struts2.ServletActionContext;
 
 import com.feedback.dao.ProductDAO;
 import com.feedback.model.Product;
@@ -13,8 +16,33 @@ public class UpdateProductAction extends ActionSupport {
     private String description;
     private String specifications;
     private String status;
+    private File productThumbnail;
+    private String productThumbnailFileName;
 
     public String execute() {
+               
+        if (productThumbnail!=null || productThumbnailFileName!=null && !productThumbnailFileName.isEmpty()) {
+			try {
+				 String uploadPath = ServletActionContext.getServletContext().getRealPath("/uploads");
+		            File uploadDir = new File(uploadPath);
+		            if (!uploadDir.exists()) {
+		                uploadDir.mkdirs();
+		            }
+
+		            // === Save Thumbnail ===
+		            File thumbnailDest = new File(uploadDir, productThumbnailFileName);
+		            FileUtils.copyFile(productThumbnail, thumbnailDest);
+		            if (productThumbnail != null && productThumbnailFileName != null) {
+		                System.out.println("✅ Thumbnail received: " + productThumbnailFileName);
+		            } else {
+		                System.out.println("❌ Thumbnail is missing or not uploaded.");
+		            }
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+				return ERROR;
+				}
+		}
         Product product = new Product();
         product.setId(id);
         product.setName(name);
@@ -24,7 +52,8 @@ public class UpdateProductAction extends ActionSupport {
         product.setDescription(description);
         product.setSpecifications(specifications);
         product.setStatus(status);
-
+        product.setThumbnail("uploads/" + productThumbnailFileName);
+        
         boolean updated = ProductDAO.updateProduct(product);
         return updated ? SUCCESS : ERROR;
     }
@@ -38,4 +67,17 @@ public class UpdateProductAction extends ActionSupport {
     public void setDescription(String description) { this.description = description; }
     public void setSpecifications(String specifications) { this.specifications = specifications; }
     public void setStatus(String status) { this.status = status; }
+    public File getProductThumbnail() {
+        return productThumbnail;
+    }
+    public void setProductThumbnail(File productThumbnail) {
+        this.productThumbnail = productThumbnail;
+    }
+
+    public String getProductThumbnailFileName() {
+        return productThumbnailFileName;
+    }
+    public void setProductThumbnailFileName(String productThumbnailFileName) {
+        this.productThumbnailFileName = productThumbnailFileName;
+    }
 }

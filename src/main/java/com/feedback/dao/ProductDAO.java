@@ -117,8 +117,10 @@ public class ProductDAO {
 	    return p;
 	}
   public static boolean updateProduct(Product product) {
-	    String sql = "UPDATE products SET name=?, sku=?, category=?, brand=?, description=?, specifications=?, status=? WHERE id=?";
-	    boolean success = false;
+	    String baseSQL = "UPDATE products SET name=?, sku=?, category=?, brand=?, description=?, specifications=?, status=?";
+	    boolean hasThumbnail = product.getThumbnail() != null && !product.getThumbnail().isEmpty();
+
+	    String sql = hasThumbnail ? baseSQL + ", thumbnail=? WHERE id=?" : baseSQL + " WHERE id=?";
 
 	    try (Connection conn = DBUtil.getConnection();
 	         PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -130,16 +132,23 @@ public class ProductDAO {
 	        stmt.setString(5, product.getDescription());
 	        stmt.setString(6, product.getSpecifications());
 	        stmt.setString(7, product.getStatus());
-	        stmt.setInt(8, product.getId());
 
-	        success = stmt.executeUpdate() > 0;
+	        int paramIndex = 8;
+	        if (hasThumbnail) {
+	            stmt.setString(8, product.getThumbnail());
+	            paramIndex = 9;
+	        }
+
+	        stmt.setInt(paramIndex, product.getId());
+	        return stmt.executeUpdate() > 0;
 
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
 
-	    return success;
+	    return false;
 	}
+
   public static boolean deleteProduct(int productId) {
 	    boolean success = false;
 

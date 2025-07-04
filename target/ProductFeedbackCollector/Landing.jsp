@@ -74,162 +74,54 @@
         <!-- Main Content -->
         <div id="content">
           <!-- Topbar -->
-          <nav
-            class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow"
-          >
-            <!-- Sidebar Toggle (Topbar) -->
-            <button
-              id="sidebarToggleTop"
-              class="btn btn-link d-md-none rounded-circle mr-3"
-            >
-              <i class="fa fa-bars"></i>
-            </button>
+         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+  <!-- Sidebar Toggle (Topbar) -->
+  <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+    <i class="fa fa-bars"></i>
+  </button>
 
-            <!-- Topbar Search -->
-            <form
-              class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
-            >
-              <div class="input-group">
-                <input
-                  type="text"
-                  class="form-control bg-light border-0 small"
-                  placeholder="Search for..."
-                  aria-label="Search"
-                  aria-describedby="basic-addon2"
-                />
-                <div class="input-group-append">
-                  <button class="btn btn-primary" type="button">
-                    <i class="fas fa-search fa-sm"></i>
-                  </button>
-                </div>
-              </div>
-            </form>
+  <!-- Search Bar -->
+  <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+    <div class="input-group">
+      <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search">
+      <div class="input-group-append">
+        <button class="btn btn-primary" type="button">
+          <i class="fas fa-search fa-sm"></i>
+        </button>
+      </div>
+    </div>
+  </form>
 
-            <!-- Topbar Navbar -->
-            <ul class="navbar-nav ml-auto">
-              <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-              <li class="nav-item dropdown no-arrow d-sm-none">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  id="searchDropdown"
-                  role="button"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <i class="fas fa-search fa-fw"></i>
-                </a>
-                <!-- Dropdown - Messages -->
-                <div
-                  class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                  aria-labelledby="searchDropdown"
-                >
-                  <form class="form-inline mr-auto w-100 navbar-search">
-                    <div class="input-group">
-                      <input
-                        type="text"
-                        class="form-control bg-light border-0 small"
-                        placeholder="Search for..."
-                        aria-label="Search"
-                        aria-describedby="basic-addon2"
-                      />
-                      <div class="input-group-append">
-                        <button class="btn btn-primary" type="button">
-                          <i class="fas fa-search fa-sm"></i>
-                        </button>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-              </li>
+  <!-- Right Section -->
+  <ul class="navbar-nav ml-auto align-items-center">
+    <!-- Alerts -->
+    <li class="nav-item dropdown no-arrow mx-1">
+      <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown">
+        <i class="fas fa-bell fa-fw"></i>
+        <span class="badge badge-danger badge-counter">0</span>
+      </a>
+      <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
+        <h6 class="dropdown-header">Notifications</h6>
+        <span class="dropdown-item text-muted">No new messages</span>
+      </div>
+    </li>
 
-              <!-- Nav Item - Alerts -->
-              <li class="nav-item dropdown no-arrow mx-1">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  id="alertsDropdown"
-                  role="button"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <i class="fas fa-bell fa-fw"></i>
-                  <!-- Counter - Alerts -->
-                  <span class="badge badge-danger badge-counter">0</span>
-                </a>
-                <!-- Dropdown - Alerts -->
-                <div
-                  class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                  aria-labelledby="alertsDropdown"
-                >
-                  <h6 class="dropdown-header">Notification</h6>
-                  <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div>
-                      <div class="small text-gray-500">No New Message</div>
-                    </div>
-                  </a>
-                  <a
-                    class="dropdown-item text-center small text-gray-500"
-                    href="#"
-                    >Show All Messages</a
-                  >
-                </div>
-              </li>
+    <div class="topbar-divider d-none d-sm-block"></div>
 
-              <div class="topbar-divider d-none d-sm-block"></div>
+    <!-- Login Button -->
+    <li class="nav-item">
+      <a href="login.jsp" class="btn btn-primary ml-2 d-flex align-items-center">
+        <i class="fas fa-sign-in-alt mr-1"></i> <span>Login to Give Feedback</span>
+      </a>
+    </li>
+  </ul>
+</nav>
 
-              <!-- Nav Item - User Information -->
-              <li class="nav-item dropdown no-arrow">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  id="userDropdown"
-                  role="button"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                >
-                  <span class="mr-2 d-none d-lg-inline text-gray-600 small"
-                    >User</span
-                  >
-                  <img
-                    class="img-profile rounded-circle"
-                    src="img/undraw_profile.svg"
-                  />
-                </a>
-                  <a href="login.jsp" class="btn btn-primary btn-block">
-				    <i class="fas fa-sign-in-alt mr-1"></i> Login to Give Feedback
-				  </a>
-                <!-- Dropdown - User Information -->
-                <div
-                  class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                  aria-labelledby="userDropdown"
-                >
-                  <div class="dropdown-divider"></div>
-                  <a
-                    class="dropdown-item"
-                    href="login.html"
-                    data-toggle="modal"
-                    data-target="#logoutModal"
-                  >
-                    <i
-                      class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"
-                    ></i>
-                    Logout
-                  </a>
-                </div>
-              </li>
-            </ul>
-          </nav>
           <!-- End of Topbar -->
 
           <!-- Begin Page Content -->
 <div class="container-fluid">
-  <div class="d-sm-flex align-items-center justify-content-between mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Product Feedback</h1>
-  </div>
+  
 
   <!-- Product Cards Section -->
   <div class="card shadow mb-4">
@@ -238,7 +130,7 @@
     </div>
     <div class="card-body">
       <div class="row">
-      <% System.out.println("Landing.jsp products size: " + request.getAttribute("products")); %>
+
       
         <s:iterator value="products" var="p">
 
@@ -322,11 +214,10 @@
 
 			    </div>
 			    <div class="col-6 pl-1">
-			      <button class="btn btn-primary btn-block open-feedback-modal"
-			              data-product-id="<s:property value='id'/>"
-			              data-product-name="<s:property value='name'/>">
-			        <i class="fas fa-comment-alt mr-1"></i> Feedback
-			      </button>
+			      <button type="button" class="btn btn-primary btn-block open-login-prompt">
+				  <i class="fas fa-comment-alt mr-1"></i> Feedback
+				</button>
+
 			    </div>
 			  </div>
 			</div>
@@ -413,6 +304,26 @@
     </div>
   </div>
 </div>
+<!-- Login Prompt Modal -->
+<div class="modal fade" id="loginPromptModal" tabindex="-1" role="dialog" aria-labelledby="loginPromptLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-warning text-dark">
+        <h5 class="modal-title" id="loginPromptLabel"><i class="fas fa-lock mr-2"></i>Login Required</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        You need to be logged in to submit feedback. Please log in to continue.
+      </div>
+      <div class="modal-footer">
+        <a href="login.jsp" class="btn btn-primary">Login Now</a>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -474,6 +385,14 @@ $(document).on('click', '.view-details-btn', function () {
 	});
 
 </script>
+<script>
+  $(document).ready(function () {
+    $('.open-login-prompt').on('click', function () {
+      $('#loginPromptModal').modal('show');
+    });
+  });
+</script>
+
 
 
   </body>

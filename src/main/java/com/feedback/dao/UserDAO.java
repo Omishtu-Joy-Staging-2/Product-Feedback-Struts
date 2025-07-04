@@ -111,6 +111,18 @@ public class UserDAO {
         }
     }
 
+    public int getTotalUsers() {
+        String sql = "SELECT COUNT(*) FROM users WHERE role = 'user'";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) return rs.getInt(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
 
 
 }

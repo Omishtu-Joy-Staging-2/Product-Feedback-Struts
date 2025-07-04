@@ -4,6 +4,11 @@ import com.feedback.model.Feedback;
 import com.feedback.util.DBUtil;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class FeedbackDAO {
 
@@ -56,5 +61,107 @@ public class FeedbackDAO {
             return false;
         }
     }
+    public Map<String, Integer> getMonthlyFeedbackCounts() {
+        Map<String, Integer> monthlyData = new LinkedHashMap<>();
+        String sql = """
+            SELECT DATE_FORMAT(created_at, '%b') AS month, COUNT(*) AS count
+            FROM feedback
+            GROUP BY MONTH(created_at)
+            ORDER BY MONTH(created_at)
+        """;
+
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                String month = rs.getString("month");
+                int count = rs.getInt("count");
+                monthlyData.put(month, count);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return monthlyData;
+    }
+    public Map<String, Integer> getFeedbackStatusCounts() {
+        Map<String, Integer> result = new HashMap<>();
+        String sql = "SELECT status, COUNT(*) AS count FROM feedback GROUP BY status";
+
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                result.put(rs.getString("status"), rs.getInt("count"));
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+ // Get total number of feedbacks
+    public int getTotalFeedbackCount() {
+        String sql = "SELECT COUNT(*) FROM feedback";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) return rs.getInt(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    // Get average rating
+    public double getAverageRating() {
+        String sql = "SELECT AVG(rating) FROM feedback";
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) return rs.getDouble(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+ // In FeedbackDAO.java
+    public List<Map<String, Object>> getTopFeedbackedProducts() {
+        List<Map<String, Object>> result = new ArrayList<>();
+        String sql = """
+            SELECT p.name, 
+                   ROUND(AVG(f.rating), 1) AS avg_rating, 
+                   COUNT(f.id) AS count
+            FROM feedback f
+            JOIN products p ON f.product_id = p.id
+            GROUP BY f.product_id
+            ORDER BY count DESC
+            LIMIT 5
+        """;
+
+        try (Connection conn = DBUtil.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                Map<String, Object> row = new HashMap<>();
+                row.put("name", rs.getString("name"));
+                row.put("avg_rating", rs.getDouble("avg_rating"));
+                row.put("count", rs.getInt("count"));
+                result.add(row);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+
+
 
 }

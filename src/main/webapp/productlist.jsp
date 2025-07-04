@@ -486,7 +486,7 @@
             <h3 id="detailProductName" class="mb-3"></h3>
             <div class="d-flex align-items-center mb-3">
               <div class="rating-stars" id="detailRatingStars"></div>
-              <span class="text-muted ml-2" id="detailReviewCount"></span>
+               
             </div>
             
             <div class="product-meta mb-4">

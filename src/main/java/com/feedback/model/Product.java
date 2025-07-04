@@ -10,6 +10,8 @@ public class Product {
   private String specifications;
   private String status;
   private String thumbnail;
+  private String thumbnailFileName;
+  
   private int feedbackCount;
   private double averageRating;
 
@@ -98,4 +100,5 @@ public class Product {
   public void setThumbnail(String thumbnail) {
     this.thumbnail = thumbnail;
   }
+ 
 }

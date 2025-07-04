@@ -11,13 +11,13 @@
     <action name="login" class="com.feedback.actions.LoginAction">
     <result name="admin">dashboard.jsp</result>
     <result name="user" type="redirectAction">
-        <param name="actionName">Productslist</param> <!-- Redirect to productlist -->
+        <param name="actionName">Productslist</param> 
     </result>
     <result name="error">login.jsp</result>
 </action>
 	<action name="register" class="com.feedback.actions.RegisterAction">
 	    <result name="success">login.jsp</result> <!-- redirect to login after successful registration -->
-	    <result name="input">register.jsp</result> <!-- if validation fails -->
+	    <result name="input">registration.jsp</result> <!-- if validation fails -->
 	</action>
 	<action name="logout" class="com.feedback.actions.LogoutAction">
 	    <result name="success">login.jsp</result>
@@ -29,7 +29,7 @@
 	<action name="addProduct" class="com.feedback.actions.AddProductAction">
 	<interceptor-ref name="fileUpload">
         <param name="maximumSize">5242880</param> 
-        <param name="allowedTypes">image/jpeg,image/png,image/jpg,image/gif</param>
+        <param name="allowedTypes">image/jpeg,image/png,image/jpg,image/gif,image/webp</param>
     </interceptor-ref>
     <interceptor-ref name="defaultStack"/>
 	
@@ -41,6 +41,11 @@
       <result name="success">/product.jsp</result> <!-- Optional or can be removed -->
     </action>
     <action name="updateProduct" class="com.feedback.actions.UpdateProductAction">
+     	<interceptor-ref name="fileUpload">
+        <param name="maximumSize">5242880</param> 
+        <param name="allowedTypes">image/jpeg,image/png,image/jpg,image/gif,image/webp</param>
+    </interceptor-ref>
+    <interceptor-ref name="defaultStack"/>
 	    <result name="success" type="redirect">listProducts</result>
 	    <result name="error">error.jsp</result>
 	</action>
@@ -59,9 +64,9 @@
 	<action name="viewAllFeedback" class="com.feedback.actions.ViewAllFeedbackAction">
 	    <result name="success">feedbacks.jsp</result>
 	</action>
-	
-	
+		
 	<action name="submitFeedbackResponse" class="com.feedback.actions.SubmitFeedbackResponseAction" />
+	<action name="exportReport" class="com.feedback.actions.ExportReportAction"/>
 	
 	  
 

@@ -50,7 +50,7 @@
         id="accordionSidebar"
       >
         <!-- Sidebar - Brand -->
-        <a class="sidebar-brand" href="home.html">
+        <a class="sidebar-brand" href="dashboard.jsp">
           <div class="sidebar-brand-text mx-2 w-100">
             <span>Product Feedback Collector</span>
           </div>
@@ -514,7 +514,7 @@
           <!-- Thumbnail (optional update) -->
           <div class="form-group">
             <label>Change Thumbnail</label>
-            <input type="file" class="form-control" name="thumbnail" accept="image/*">
+            <input type="file" class="form-control" name="productThumbnail" accept="image/*">
           </div>
 
           <!-- Status -->
